@@ -1,0 +1,33 @@
+name: mnist_pytorch_const
+data:
+  url: https://s3-us-west-2.amazonaws.com/determined-ai-test-data/pytorch_mnist.tar.gz
+hyperparameters:
+  learning_rate:
+    type: double
+    minval: .0001
+    maxval: .001
+  global_batch_size: 128
+  n_filters1:
+    type: int
+    minval: 16
+    maxval: 64
+  n_filters2:
+    type: int
+    minval: 16
+    maxval: 64
+  dropout1:
+    type: double
+    minval: 0.1
+    maxval: 0.4
+  dropout2:
+    type: double
+    minval: 0.1
+    maxval: 0.4
+searcher:
+  name: random
+  metric: accuracy
+  max_trials: 128
+  max_length:
+      batches: 2000 #60,000 training images with batch size 64
+  smaller_is_better: true
+entrypoint: model_def:MNistTrial
